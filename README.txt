@@ -34,11 +34,11 @@ resolution of around 31ns for the PWM.  I've configured the PWMs for a
 period of 16 clock cycles (500 ns, 2 MHz), clock high pulses of three
 clock cycles (93ns), and delay between phases of one clock cycle
 (31ns). This could be trivially changed to a 2.67 MHz clock by
-reducing the period to 12 cycles and hte clock high pulses to two
+reducing the period to 12 cycles and the clock high pulses to two
 clock cycles (62ns).  Either set of timings is within the
 specifications of the TI and Western Digital parts.
 
 A word of caution: when using gate drivers to drive old MOS parts, I
 recommend the use of series resistors of at least 10 ohms and schottky
-diode clamps to Vss and Vdd, to ensure that undershoot and overshoot
-(due to ringing) are limited to 0.3V.
+diode clamps to Vss and Vdd, to ensure that undershoot, overshoot, and
+ringing are limited to 0.3V.
