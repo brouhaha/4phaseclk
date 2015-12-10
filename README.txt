@@ -1,17 +1,18 @@
 Four-Phase non-overlapping clock generator using PIC microcontroller
 
 In the 1970s, some microprocessors and support chips used four-phase
-NMOS logic. Some, including the Rockwell PPS-4 and PPS-8, generated
-the four non-overlapping clock phases on-chip based on two external
-clock inputs, while others, including the TI TMS9900, the Western
-Digital CP1600 chip set (used in DEC LSI-11 and Alpha Micro AM100),
-and the WD9000 chipset (used in Pascal Microengine), required an
-external four-phase clock generator. Typically the four-phase clock
-inputs required a voltage swing close to the Vss and Vdd supply rails
-(0 to +12V). TI and Western Digital offered support chips to generate
-the four-phase clock, although it was often done with a crystal, 74S
-logic, and MOS drivers such as the National Semiconductor MH0026 dual
-MOS driver or the Intel 3245 quad MOS driver.
+MOS logic. Some, including the Rockwell PPS-4 and PPS-8, generated the
+four non-overlapping clock phases on-chip based on two external clock
+inputs, while others, including the TI TMS9900, the Western Digital
+CP1600 chip set (used in DEC LSI-11 and Alpha Micro AM100), and the
+WD9000 chipset (used in Pascal Microengine), required an external
+four-phase clock generator. The four-phase clock inputs usually
+required a voltage swing close to the Vss and Vdd supply rails,
+typically 0V to +12V for NMOS. TI and Western Digital offered support
+chips to generate the four-phase clock, although it was often done
+with a crystal, 74S logic, and MOS drivers such as the National
+Semiconductor MH0026 dual MOS driver or the Intel 3245 quad MOS
+driver.
 
 I've recently had occasion to work on interfacing to some of these old
 chips, and wanted a modern four-phase clock generator. I've just
@@ -37,7 +38,7 @@ reducing the period to 12 cycles and hte clock high pulses to two
 clock cycles (62ns).  Either set of timings is within the
 specifications of the TI and Western Digital parts.
 
-A word of caution: when using gate drivers to drive old NMOS parts, I
+A word of caution: when using gate drivers to drive old MOS parts, I
 recommend the use of series resistors of at least 10 ohms and schottky
 diode clamps to Vss and Vdd, to ensure that undershoot and overshoot
 (due to ringing) are limited to 0.3V.
