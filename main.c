@@ -69,16 +69,17 @@ void interrupt isr(void)
 
 }
 
+// Use four PWM modules to generate a four-phase non-overlapping clock.
+// PWM1 is used in independent run mode, and PWMn, for n in 2..4, are in
+// continuous slave run mode, at an offset from PWMn-1.
 void pwm_init(void)
 {
-// Note that the following PWM initialization, with all four PWMs in
-// independent run mode, winds up with them synchronized, but only by
-// accident. We should use an offset mode for PWM2..4.
     PWM1CLKCON = 0x00;  // From Fosc w/o prescaler
     
     PWM1PR     = 15;
     PWM1PH     = 0;
     PWM1DC     = 3;
+    PWM1OF     = 4;
     
     PWM1INTE   = 0x00;  // no interrupts enabled
     PWM1INTF   = 0x00;  // clear interrupt flag
@@ -92,14 +93,15 @@ void pwm_init(void)
     PWM2CLKCON = 0x00;  // From Fosc w/o prescaler
     
     PWM2PR     = 15;
-    PWM2PH     = 4;
-    PWM2DC     = 7;
+    PWM2PH     = 0;
+    PWM2DC     = 3;
+    PWM2OF     = 4;
     
     PWM2INTE   = 0x00;  // no interrupts enabled
     PWM2INTF   = 0x00;  // clear interrupt flag
     
     PWM2LDCON  = 0x80;  // load armed
-    PWM2OFCON  = 0x00;  // independent run mode
+    PWM2OFCON  = 0x20;  // continuous slave run mode, OF1 match
     PWM2CON    = 0x80;  // enable, standard PWM mode, active high output
  
     RC1PPS     = PPSO_PWM2;
@@ -107,14 +109,15 @@ void pwm_init(void)
     PWM3CLKCON = 0x00;  // From Fosc w/o prescaler
     
     PWM3PR     = 15;
-    PWM3PH     = 8;
-    PWM3DC     = 11;
+    PWM3PH     = 0;
+    PWM3DC     = 3;
+    PWM3OF     = 4;
     
     PWM3INTE   = 0x00;  // no interrupts enabled
     PWM3INTF   = 0x00;  // clear interrupt flag
     
     PWM3LDCON  = 0x80;  // load armed
-    PWM3OFCON  = 0x00;  // independent run mode
+    PWM3OFCON  = 0x21;  // continuous slave run mode, OF2 match
     PWM3CON    = 0x80;  // enable, standard PWM mode, active high output
  
     RC2PPS     = PPSO_PWM3;
@@ -122,14 +125,15 @@ void pwm_init(void)
     PWM4CLKCON = 0x00;  // From Fosc w/o prescaler
     
     PWM4PR     = 15;
-    PWM4PH     = 12;
-    PWM4DC     = 15;
+    PWM4PH     = 0;
+    PWM4DC     = 3;
+    PWM4OF     = 4;
     
     PWM4INTE   = 0x00;  // no interrupts enabled
     PWM4INTF   = 0x00;  // clear interrupt flag
     
     PWM4LDCON  = 0x80;  // load armed
-    PWM4OFCON  = 0x00;  // independent run mode
+    PWM4OFCON  = 0x22;  // continuous slave run mode, OF3 match
     PWM4CON    = 0x80;  // enable, standard PWM mode, active high output
  
     RC3PPS     = PPSO_PWM4;
