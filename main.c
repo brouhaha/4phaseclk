@@ -1,3 +1,18 @@
+// Four-phase non-overlapping clock generator
+// Copyright 2015 Eric Smith <spacewar@gmail.com>
+
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License version 3
+// as published by the Free Software Foundation.
+
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 #define SYS_FREQ        32000000L
 #define FCY             SYS_FREQ/4
 
@@ -5,7 +20,6 @@
 
 #include <stdint.h>        /* For uint8_t definition */
 #include <stdbool.h>       /* For true/false definition */
-
 
 // PIC16F1575 Configuration Bit Settings
 
@@ -28,6 +42,7 @@
 #pragma config LVP = OFF        // Low-Voltage Programming Enable (High-voltage on MCLR/VPP must be used for programming)
 
 
+// Constants used in the RxxPPS registers for peripheral output selection
 #define PPSO_LAT        0x0
 #define PPSO_SYNC_C1OUT 0x1
 #define PPSO_SYNC_C2OUT 0x2
@@ -40,36 +55,6 @@
 #define PPSO_TX_CK      0x9
 #define PPSO_DT         0xa
 
-void interrupt isr(void)
-{
-    /* This code stub shows general interrupt handling.  Note that these
-    conditional statements are not handled within 3 seperate if blocks.
-    Do not use a seperate if block for each interrupt flag to avoid run
-    time errors. */
-
-#if 0
-    
-    /* TODO Add interrupt routine code here. */
-
-    /* Determine which flag generated the interrupt */
-    if(<Interrupt Flag 1>)
-    {
-        <Interrupt Flag 1=0>; /* Clear Interrupt Flag 1 */
-    }
-    else if (<Interrupt Flag 2>)
-    {
-        <Interrupt Flag 2=0>; /* Clear Interrupt Flag 2 */
-    }
-    else
-    {
-        /* Unhandled interrupts */
-    }
-
-#endif
-
-}
-
-// Use four PWM modules to generate a four-phase non-overlapping clock.
 // PWM1 is used in independent run mode, and PWMn, for n in 2..4, are in
 // continuous slave run mode, at an offset from PWMn-1.
 void pwm_init(void)
@@ -158,11 +143,7 @@ void main(void)
     
     while(1)
     {
-        //PWM1CONbits.OUT = 1;
-        LATC = (LATC & 0xf0) | count;
-        count = (count + 1) & 0x0f;
-        //PWM1CONbits.OUT = 0;
-        _delay(800000);
+        ;
     }
 }
 
